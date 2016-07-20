@@ -7,10 +7,12 @@ jeesite-api是一个基于jeesite的用于移动端api和后台管理的快速�
 2. 打开Eclipse，import-->Existing Maven Projects
 3. 修改src\main\resources\jeesite.properties文件中的数据库设置参数
 6. 最高管理员账号，用户名：admin 密码：admin
+
 ## 相关学习文档
 1. spring http://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle
 2. mybatis http://www.mybatis.org/mybatis-3/zh/index.html，http://mybatis.org/spring/zh/index.html
 3. Ehcache http://www.ehcache.org/documentation/3.0/getting-started.html
 4. shiro http://shiro.apache.org/webapp-tutorial.html
+
 ## 意见、建议
 https://github.com/javyuan/jeesite-api/issues
