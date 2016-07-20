@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zlwh.hands.admin.modules.user.dao.CUserDao">
+    
+	<sql id="cUserColumns">
+		a.id AS "id",
+		a.user_type AS "userType",
+		a.login_name AS "loginName",
+		a.password AS "password",
+		a.device_type AS "deviceType",
+		a.device_id AS "deviceId",
+		a.open_id AS "openId",
+		a.real_name AS "realName",
+		a.nick_name AS "nickName",
+		a.image_url AS "imageUrl",
+		a.sex AS "sex",
+		a.phone AS "phone",
+		a.jf AS "jf",
+		a.status AS "status",
+		a.create_date AS "createDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="cUserJoins">
+	</sql>
+    
+	<select id="get" resultType="CUser">
+		SELECT 
+			<include refid="cUserColumns"/>
+		FROM c_user a
+		<include refid="cUserJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="CUser">
+		SELECT 
+			<include refid="cUserColumns"/>
+		FROM c_user a
+		<include refid="cUserJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="loginName != null and loginName != ''">and a.login_name = #{loginName}</if>
+			<if test="userType != null and userType != ''">and a.user_type = #{userType}</if>
+			<if test="password != null and password != ''">and a.password = #{password}</if>
+			<if test="openId != null and openId != ''">and a.open_id = #{openId}</if>
+			<if test="status != null and status != ''">and a.status = #{status}</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="CUser">
+		SELECT 
+			<include refid="cUserColumns"/>
+		FROM c_user a
+		<include refid="cUserJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO c_user(
+			<if test="id != null and id != ''">
+				id,
+			</if>
+			<if test="userType != null and userType != ''">
+				user_type,
+			</if>
+			<if test="loginName != null and loginName != ''">
+				login_name,
+			</if>
+			<if test="password != null and password != ''">
+				password,
+			</if>
+			<if test="deviceType != null and deviceType != ''">
+				device_type,
+			</if>
+			<if test="deviceId != null and deviceId != ''">
+				device_id,
+			</if>
+			<if test="openId != null and openId != ''">
+				open_id,
+			</if>
+			<if test="realName != null and realName != ''">
+				real_name,
+			</if>
+			<if test="nickName != null and nickName != ''">
+				nick_name,
+			</if>
+			<if test="imageUrl != null and imageUrl != ''">
+				image_url,
+			</if>
+			<if test="sex != null and sex != ''">
+				sex,
+			</if>
+			<if test="phone != null and phone != ''">
+				phone,
+			</if>
+			<if test="jf != null and jf != ''">
+				jf,
+			</if>
+			<if test="status != null and status != ''">
+				status,
+			</if>
+			<if test="createDate != null and createDate != ''">
+				create_date,
+			</if>
+			<if test="remarks != null and remarks != ''">
+				remarks,
+			</if>
+			<if test="delFlag != null and delFlag != ''">
+				del_flag
+			</if>
+		) VALUES (
+			<if test="id != null and id != ''">
+				#{id},
+			</if>
+			<if test="userType != null and userType != ''">
+				#{userType},
+			</if>
+			<if test="loginName != null and loginName != ''">
+				#{loginName},
+			</if>
+			<if test="password != null and password != ''">
+				#{password},
+			</if>
+			<if test="deviceType != null and deviceType != ''">
+				#{deviceType},
+			</if>
+			<if test="deviceId != null and deviceId != ''">
+				#{deviceId},
+			</if>
+			<if test="openId != null and openId != ''">
+				#{openId},
+			</if>
+			<if test="realName != null and realName != ''">
+				#{realName},
+			</if>
+			<if test="nickName != null and nickName != ''">
+				#{nickName},
+			</if>
+			<if test="imageUrl != null and imageUrl != ''">
+				#{imageUrl},
+			</if>
+			<if test="sex != null and sex != ''">
+				#{sex},
+			</if>
+			<if test="phone != null and phone != ''">
+				#{phone},
+			</if>
+			<if test="jf != null and jf != ''">
+				#{jf},
+			</if>
+			<if test="status != null and status != ''">
+				#{status},
+			</if>
+			<if test="createDate != null and createDate != ''">
+				#{createDate},
+			</if>
+			<if test="remarks != null and remarks != ''">
+				#{remarks},
+			</if>
+			<if test="delFlag != null and delFlag != ''">
+				#{delFlag}
+			</if>
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE c_user 
+		<set>
+			<if test="userType != null and userType != ''">
+				user_type = #{userType},
+			</if>
+			<if test="loginName != null and loginName != ''">
+				login_name = #{loginName},
+			</if>
+			<if test="password != null and password != ''">
+				password = #{password},
+			</if>
+			<if test="deviceType != null and deviceType != ''">
+				device_type = #{deviceType},
+			</if>
+			<if test="deviceId != null and deviceId != ''">
+				device_id = #{deviceId},
+			</if>
+			<if test="openId != null and openId != ''">
+				open_id = #{openId},
+			</if>
+			<if test="realName != null and realName != ''">
+				real_name = #{realName},
+			</if>
+			<if test="nickName != null and nickName != ''">
+				nick_name = #{nickName},
+			</if>
+			<if test="imageUrl != null and imageUrl != ''">
+				image_url = #{imageUrl},
+			</if>
+			<if test="sex != null and sex != ''">
+				sex = #{sex},
+			</if>
+			<if test="phone != null and phone != ''">
+				phone = #{phone},
+			</if>
+			<if test="jf != null and jf != ''">
+				jf = #{jf},
+			</if>
+			<if test="status != null and status != ''">
+				status = #{status},
+			</if>
+			<if test="remarks != null and remarks != ''">
+				remarks = #{remarks},
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE c_user SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zlwh.hands.admin.modules.sys.dao.CLogDao">
+    
+	<sql id="cLogColumns">
+		a.id AS "id",
+		a.title AS "title",
+		a.type AS "type",
+		a.user_token AS "userToken",
+		a.remote_addr AS "remoteAddr",
+		a.user_agent AS "userAgent",
+		a.request_uri AS "requestUri",
+		a.method AS "method",
+		a.params AS "params",
+		a.exception AS "exception",
+		a.lng AS "lng",
+		a.lat AS "lat",
+		a.province AS "province",
+		a.city AS "city",
+		a.create_time AS "createTime"
+	</sql>
+	
+	<sql id="cLogJoins">
+	</sql>
+    
+	<select id="get" resultType="CLog">
+		SELECT 
+			<include refid="cLogColumns"/>
+		FROM c_log a
+		<include refid="cLogJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="CLog">
+		SELECT 
+			<include refid="cLogColumns"/>
+		FROM c_log a
+		<include refid="cLogJoins"/>
+		<where>
+			
+			<if test="title != null and title != ''">
+				AND a.title LIKE 
+					<if test="dbName == 'oracle'">'%'||#{title}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{title}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{title},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="CLog">
+		SELECT 
+			<include refid="cLogColumns"/>
+		FROM c_log a
+		<include refid="cLogJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO c_log(
+			id,
+			title,
+			type,
+			user_token,
+			remote_addr,
+			user_agent,
+			request_uri,
+			method,
+			params,
+			exception,
+			lng,
+			lat,
+			province,
+			city,
+			create_time
+		) VALUES (
+			#{id},
+			#{title},
+			#{type},
+			#{userToken},
+			#{remoteAddr},
+			#{userAgent},
+			#{requestUri},
+			#{method},
+			#{params},
+			#{exception},
+			#{lng},
+			#{lat},
+			#{province},
+			#{city},
+			#{createTime}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE c_log SET 	
+			title = #{title},
+			type = #{type},
+			user_token = #{userToken},
+			remote_addr = #{remoteAddr},
+			user_agent = #{userAgent},
+			request_uri = #{requestUri},
+			method = #{method},
+			params = #{params},
+			exception = #{exception},
+			lng = #{lng},
+			lat = #{lat},
+			province = #{province},
+			city = #{city},
+			create_time = #{createTime}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM c_log
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

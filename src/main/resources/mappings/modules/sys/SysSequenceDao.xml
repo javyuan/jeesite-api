@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zlwh.hands.admin.modules.sys.dao.SysSequenceDao">
+    
+	<sql id="sysSequenceColumns">
+		a.name AS "name",
+		a.current_value AS "currentValue",
+		a.increment AS "increment"
+	</sql>
+	
+	<sql id="sysSequenceJoins">
+	</sql>
+    
+	<select id="get" resultType="SysSequence">
+		SELECT 
+			<include refid="sysSequenceColumns"/>
+		FROM sys_sequence a
+		<include refid="sysSequenceJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="SysSequence">
+		SELECT 
+			<include refid="sysSequenceColumns"/>
+		FROM sys_sequence a
+		<include refid="sysSequenceJoins"/>
+		<where>
+			
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="SysSequence">
+		SELECT 
+			<include refid="sysSequenceColumns"/>
+		FROM sys_sequence a
+		<include refid="sysSequenceJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO sys_sequence(
+			name,
+			current_value,
+			increment
+		) VALUES (
+			#{name},
+			#{currentValue},
+			#{increment}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE sys_sequence SET 	
+			name = #{name},
+			current_value = #{currentValue},
+			increment = #{increment}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM sys_sequence
+		WHERE id = #{id}
+	</update>
+	
+	<select id="getNextVal" resultType="string">
+		select nextval('${name}')
+	</select>
+	
+	<select id="getCurrentVal" resultType="string">
+		select currval('${name}')
+	</select>
+</mapper>
