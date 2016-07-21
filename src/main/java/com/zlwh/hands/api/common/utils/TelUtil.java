@@ -5,8 +5,8 @@ import java.io.UnsupportedEncodingException;
 public class TelUtil {
 	// 验证码发送地址
 	private static final String SMSURLSTR = "http://sdk.entinfo.cn:8061/webservice.asmx/mdsmssend";
-	private static final String SN = "SDK-BBX-010-19809";
-	private static final String SMSPWD = "7EFB4E32E0F72348087BF9144FC8585D";
+	private static final String SN = "";
+	private static final String SMSPWD = "";
 	public static final String TELNUM = "139,138,137,136,135,134,147,188,187,184,183,182,178,159,158,157,152,151,150,186,185,176,145,156,155,132,131,130,189,181,180,177,153,133,189,133";
 	/**
 	 * @param mobilePhone
